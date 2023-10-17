@@ -1,0 +1,90 @@
+<div>
+    <h1>Feedback Info</h1>
+  
+    
+    <ul>
+      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 1 }">Add Feedback</a></li>
+      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 2 }">Update Feedback</a></li>
+      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 3 }">View All Feedback</a></li>
+      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 4 }">Delete Feedback</a></li>
+    </ul>
+</div>
+<div>
+  <div>
+    <h4>Feedback Module </h4>
+    <h4>Param is {{myparam}}</h4>
+    <div *ngIf="myparam==1">
+      <h2>Add Feedback Details</h2>
+      <form #feedbackForm="ngForm" (ngSubmit)="addFeedback()">
+        <label for="feedbackId">Feedback ID:</label>
+        <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" [(ngModel)]="feed.date" required><br><br>
+
+        <label for="comments">Comments:</label>
+        <input type="text" id="comments" name="comments" [(ngModel)]="feed.comments" required><br><br>
+
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" [(ngModel)]="feed.rating" required><br><br>
+
+        <button type="submit">ADD</button>
+      </form>
+
+      <p>{{ responseMessage }}</p>
+
+    </div>
+
+    <div *ngIf="myparam==2">
+      <h2>Update Feedback</h2>
+      <form #updateFeedbackForm="ngForm" (ngSubmit)="updateFeedback()">
+        <label for="feedbackId">Enter Enrollment Id to update feedback:</label>
+        <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required><br><br>
+
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" [(ngModel)]="feed.rating" required><br><br>
+
+        <button type="submit">UPDATE</button>
+      </form>
+        
+      <p>{{ responseMessage }}</p>
+
+    </div>
+
+    <div *ngIf="myparam==3">
+        <h2>View All Feedbacks</h2>
+  
+        <table>
+          <thead>
+            <tr>
+              <th>Feedback ID</th>
+              <th>Date</th>
+              <th>Comments</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let feedback of feeds">
+              <td>{{ feedback.feedbackId }}</td>
+              <td>{{ feedback.date }}</td>
+              <td>{{ feedback.comments }}</td>
+              <td>{{ feedback.rating }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <p>{{ responseMessage }}</p>
+      </div>
+   
+    <div *ngIf="myparam==4">
+        <h2>Delete Feedback By ID</h2>
+        <form #deleteFeedbackForm="ngForm" (ngSubmit)="deleteFeedbackById()">
+          <label for="feedbackId">Feedback ID:</label>
+          <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required><br><br>
+          <button type="submit">DELETE</button>
+        </form>
+        <p>{{ responseMessage }}</p>
+      </div>
+
+  </div>
+</div>
