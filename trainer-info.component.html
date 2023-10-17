@@ -1,0 +1,134 @@
+<div>
+    <h1>Trainer Info</h1>
+    <!-- Your navigation links with routerLink and query parameters -->
+    <ul>
+      <li><a [routerLink]="['/trainerInfo']" [queryParams]="{ paramFlag: 1 }">Add Trainer</a></li>
+      <li><a [routerLink]="['/trainerInfo']" [queryParams]="{ paramFlag: 2 }">Update Course</a></li>
+      <li><a [routerLink]="['/trainerInfo']" [queryParams]="{ paramFlag: 3 }">View All Trainers</a></li>
+      <li><a [routerLink]="['/trainerInfo']" [queryParams]="{ paramFlag: 4 }">View Trainer By ID</a></li>
+    </ul>
+  
+    <!-- Your content area to display results or form inputs -->
+    <!-- For example, when you're viewing enrollments, you might display a table of data. -->
+    <!-- When adding an enrollment, you might show a form for data input. -->
+  
+  </div>
+  <div>
+    <div>
+      <h4>Trainer Module </h4>
+      <h4>Param is {{myparam}}</h4>
+      <div *ngIf="myparam==1">
+        <h2>Add Trainer Details</h2>
+        <form #trainerForm="ngForm" (ngSubmit)="addTrainer()">
+          <label for="trainerId">Trainer ID:</label>
+          <input type="text" id="trainerId" name="trainerId" [(ngModel)]="trainer.trainerId" required><br><br>
+  
+          <label for="trainerName">Trainer Name:</label>
+          <input type="text" id="trainerName" name="trainerName" [(ngModel)]="trainer.trainerName" required><br><br>
+  
+          <label for="qualification">Qualification:</label>
+          <input type="text" id="qualification" name="qualification" [(ngModel)]="trainer.qualification" required><br><br>
+  
+          <label for="phoneNumber">Phone Number:</label>
+          <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="trainer.phoneNumber" required><br><br>
+  
+  
+          <label for="address">Address:</label>
+          <input type="text" id="address" name="address" [(ngModel)]="trainer.address" ><br><br>
+  
+         
+          <label for="courseId">Course ID:</label>
+          <input type="text" id="courseId" name="courseId" [(ngModel)]="trainer.courseId" ><br><br>
+  
+          <button type="submit">ADD</button>
+        </form>
+  
+        <p>{{ responseMessage }}</p>
+  
+      </div>
+  
+      <div *ngIf="myparam==2">
+        <h2>Update Course</h2>
+        <form #updateScoreForm="ngForm" (ngSubmit)="updateCourse()">
+
+            <label for="courseId">Course ID:</label>
+            <input type="text" id="courseId" name="courseId" [(ngModel)]="trainer.courseId" required><br><br>
+    
+          <label for="trainerId">Trainer ID:</label>
+          <input type="text" id="trainerId" name="trainerId" [(ngModel)]="trainer.trainerId" required><br><br>
+  
+         
+          <button type="submit">UPDATE</button>
+        </form>
+          
+        <p>{{ responseMessage }}</p>
+  
+      </div>
+  
+      <div *ngIf="myparam==3">
+        <h2>View All Trainers</h2>
+  
+        <table>
+          <thead>
+            <tr >
+              <th>Trainer ID</th>
+              <th>Trainer Name</th>
+              <th>Qualification</th>
+              <th>Phone Number</th>
+              <th>Address</th>
+              <th>Course ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let train of trainers">
+              <td>{{ train.trainerId }}</td>
+              <td>{{ train.trainerName }}</td>
+              <td>{{ train.qualification }}</td>
+              <td>{{ train.phoneNumber }}</td>
+              <td>{{ train.address }}</td>
+              <td>{{ train.courseId }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <p>{{ responseMessage }}</p>
+  
+      </div>
+  
+      <div *ngIf="myparam==4">
+        <h2>View Trainer By ID</h2>
+        <form #trainerByIDForm="ngForm" (ngSubmit)="viewTrainerByID()">
+          <label for="trainerId">Trainer ID:</label>
+          <input type="text" id="trainerId" name="trainerId" [(ngModel)]="trainer.trainerId" required><br><br>
+          <button type="submit">SEARCH</button>
+        </form>
+        <p>{{ responseMessage }}</p>
+        <table>
+          <thead>
+            <tr>
+                <th>Trainer ID</th>
+                <th>Trainer Name</th>
+                <th>Qualification</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Course ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+                <td>{{ train1?.trainerId }}</td>
+                <td>{{ train1?.trainerName }}</td>
+                <td>{{ train1?.qualification }}</td>
+                <td>{{ train1?.phoneNumber }}</td>
+                <td>{{ train1?.address }}</td>
+                <td>{{ train1?.courseId }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+      </div>
+      
+  
+  
+    </div>
+  </div>
