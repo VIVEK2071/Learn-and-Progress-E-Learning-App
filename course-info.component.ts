@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 //import { CourseService } from './course.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Enrollment } from '../enrollment-info/enrollment';
 //
 
 
@@ -12,12 +13,12 @@ import { CourseService } from './course.service';
 
 
 @Component({
-  selector: 'app-course-info',
+  selector: 'app-course-info', 
   templateUrl: './course-info.component.html',
   styleUrls: ['./course-info.component.css']
 })
 export class CourseInfoComponent implements OnInit {
-  course1: Course = new Course();
+  course: Course = new Course();
   courseId: string = '';
   courseName: string = '';
   duration: number = 0;
@@ -28,10 +29,10 @@ export class CourseInfoComponent implements OnInit {
   allCourses: any;
   paramFlag : number = 0;
   courses : Course[] | undefined;
-  
   selectedCategory: string = '';
   selectedDuration: number = 0;
-  courseUpdated: Course | undefined;
+  courseUpdated!: Course ;
+  courseByCD!: Course[] ;
  // courseService: any;
   constructor(private courseService: CourseService,private route: ActivatedRoute) {
     
@@ -42,30 +43,33 @@ export class CourseInfoComponent implements OnInit {
         this.paramFlag = param['paramFlag']
       }
     );
-    this.viewAll();
   }
+
+  addedCourse:Course=new Course();
   addCourse() {
     // Check if any of the input fields are empty
     this.successMessage="";
-    this.courseService.addCourse(this.course1)
+    this.courseService.addCourse(this.course)
       .subscribe(
         (response: any) => {
-          this.successMessage = `Course with id ${this.courseId} added successfully`;
+          this.addedCourse =response as Course
+          this.successMessage = `Course with id ${this.addedCourse.courseId} added successfully`;
         },
-        (error: any) => {
+        (error) => {
           this.successMessage = 'An error occurred while adding the course.';
         }
       );
   }
+  responseMessage : string = "";
   updateDuration() {
     // Call the updateDuration method from the CourseService with courseId and new duration
-    //this.successMessage="";
-    this.courseService.updateDuration(this.course1.courseId,this.course1.duration)
+    this.responseMessage="";
+    this.courseService.updateDuration(this.courseId,this.duration)
       .subscribe(
        
         (data) => {
           // Data validation successful
-          this.successMessage="Data successfully updated:"
+          this.responseMessage="Data successfully updated:"
           this.courseUpdated = data as Course;
         },
         (error: any) => {
@@ -78,59 +82,64 @@ export class CourseInfoComponent implements OnInit {
   viewAll(){
     this.successMessage="";
     this.courseService.viewAll().subscribe(
-      data=>{this.courses=data as Course[]});
+      data=>{this.courses=data as Course[]},
+      (error: any) => {
+        // Data validation failed
+        this.successMessage="Data is not fetched:"
+      });
     
   }
 viewCourseByID(){
+  
   this.courseService.viewCourseByID(this.courseId).subscribe(
     (data: Course) => {
       console.log(`Course ID ${this.courseId} details retrieved successfully.`);
       // Handle the retrieved course data as needed
+      this.courseUpdated=data as Course;
+
     },
     (error: any) => {
-      console.error(error); // Display the error message from the HTTP response
+      this.successMessage="Course Id is not available" // Display the error message from the HTTP response
     }
   );
 }
 viewCourseByCategoryAndDuration() {
   // Call the viewCourseByCategoryAndDuration method from the CourseService
+  
   this.courseService
-    .viewCourseByCategoryAndDuration(this.category, this.duration)
+    .viewCourseByCategoryAndDuration(this.selectedCategory, this.selectedDuration)
     .subscribe(
-      (data: Course) => {
+      (data) => {
         console.log('View Course By Category And Duration done successfully.');
         // Handle the retrieved course data as needed
+        this.courseByCD=data as Course[];
+
       },
       (error: any) => {
-        console.error(error); // Display the error message from the HTTP response
+        this.successMessage="Category or Duration is not available" // Display the error message from the HTTP response
       }
     );
 }
-searchCourses() {
-  // Ensure category and duration have valid values
-  if (!this.category || !this.duration) {
-    console.error('Please provide both category and duration.');
-    return;
-  }
+// searchCourses() {
+//   // Ensure category and duration have valid values
+//   if (!this.category || !this.duration) {
+//     console.error('Please provide both category and duration.');
+//     return;
+//   }
 
-  // Call the viewCourseByCategoryAndDuration method from the CourseService
-  this.courseService
-    .viewCourseByCategoryAndDuration(this.category, this.duration)
-    .subscribe(
-      (data: Course) => {
-        // Handle the retrieved course data as needed
-        console.log('View Course By Category And Duration done successfully.');
-        this.course1 = data; // Update the courses array with the search results
-      },
-      (error: any) => {
-        console.error(error); // Display the error message from the HTTP response
-        this.courses = []; // Clear the courses array on error
-      }
-    );
+//   // Call the viewCourseByCategoryAndDuration method from the CourseService
+//   this.courseService
+//     .viewCourseByCategoryAndDuration(this.category, this.duration)
+//     .subscribe(
+//       (data: Course) => {
+//         // Handle the retrieved course data as needed
+//         console.log('View Course By Category And Duration done successfully.');
+//         this.course = data; // Update the courses array with the search results
+//       },
+//       (error: any) => {
+//         console.error(error); // Display the error message from the HTTP response
+//         this.courses = []; // Clear the courses array on error
+//       }
+//     );
+// }
 }
-}
-
-
-
-
-

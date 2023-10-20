@@ -14,7 +14,7 @@ export class CourseService {
 
   constructor(private http: HttpClient) {}
 
-  addCourse(course:any){
+  addCourse(course:any):Observable<Course>{
    const url = `${this.baseUrl}/addCourse`;
     
    return this.http.post(url, course)
@@ -24,7 +24,7 @@ export class CourseService {
   }
 
   updateDuration(courseId:string, duration:number){
-    const url = `${this.baseUrl}/updateDuration/{courseId}/{duration}`;
+    const url = `${this.baseUrl}/updateDuration/${courseId}/${duration}`;
     return this.http.put(url, null)
       .pipe(
         catchError(this.errorHandler)
@@ -32,73 +32,25 @@ export class CourseService {
   }
 
   viewAll(): Observable<Object>{
-    return this.http.get(this.baseUrl+'/viewAll')
+    return this.http.get(this.baseUrl+`/viewAll`)
       .pipe(
         catchError(this.errorHandler)
       );
   }
 
   viewCourseByID(courseId:string){
-    const url = `${this.baseUrl}/viewCourseByID/{courseId}`;
-    console.log("This course is called");
+    const url = `${this.baseUrl}/viewCourseByID/${courseId}`;
+    
     return this.http.get(url)
       .pipe(
         catchError(this.errorHandler)
       );
   }
   viewCourseByCategoryAndDuration( category: string,duration: number) {
-    return this.http.get(this.baseUrl+'/viewCourseByCategoryAndDuration/{category}/{duration}')
+    return this.http.get(this.baseUrl+`/viewCourseByCategoryAndDuration/${category}/${duration}`)
       .pipe(
         catchError(this.errorHandler)
       );
   }
-  viewScoreBySort(): Observable<Object> {
-    return this.http.get(this.baseUrl+'/viewScoreBysort')
-      .pipe(
-        catchError(this.errorHandler)
-      );
-   }
-  // viewMinScore(): Observable<Object> {
-  //   return this.http.get(this.baseUrl+'/viewMin')
-  //     .pipe(
-  //       catchError(this.errorHandler)
-  //     );
-  // }
-
-  // // viewEnrollmentByScoreAndCourseId(score: number, courseId: string): Observable<Object> {
-  // //   const url = `${this.baseUrl}/${score}/${courseId}`;
-  // //   return this.http.get(url)
-  // //     .pipe(
-  // //       catchError(this.errorHandler)
-  // //     );
-  // // }
-
-  // // viewEnrollmentByStudentName(studentName: string): Observable<Object> {
-  // //   const url = `${this.baseUrl}/${studentName}`;
-  // //   return this.http.get(url)
-  // //     .pipe(
-  // //       catchError(this.errorHandler)
-  // //     );
-  // // }
-
-  // // viewEnrollmentByCourseId(courseId: string): Observable<Object> {
-  // //   const url = `${this.baseUrl}/${courseId}`;
-  // //   return this.http.get(url)
-  // //     .pipe(
-  // //       catchError(this.errorHandler)
-  // //     );
-  // // }
-
-  // // getEnrollmentCountCoursewise(): Observable<Object> {
-  // //   const url = `${this.baseUrl}/count`;
-  // //   return this.http.get(url)
-  // //     .pipe(
-  // //       catchError(this.errorHandler)
-  // //     );
-  // // }
-
-  // private errorHandler(error: HttpErrorResponse): Observable<any> {
-  //   return throwError('An error occurred. Please try again later.');
-  // }
+  
 }
-
