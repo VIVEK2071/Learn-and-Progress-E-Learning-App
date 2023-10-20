@@ -1,6 +1,6 @@
 export class Feedback{
     feedbackId!: string
-    date!: Date
+    feedbackDate!: Date
     comments!: string
     rating!: number
     enrollmentId!: string

@@ -1,90 +1,269 @@
-<div>
-    <h1>Feedback Info</h1>
-  
-    
-    <ul>
-      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 1 }">Add Feedback</a></li>
-      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 2 }">Update Feedback</a></li>
-      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 3 }">View All Feedback</a></li>
-      <li><a [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 4 }">Delete Feedback</a></li>
-    </ul>
-</div>
-<div>
+<div class="outerfeed">
+
   <div>
-    <h4>Feedback Module </h4>
-    <h4>Param is {{myparam}}</h4>
-    <div *ngIf="myparam==1">
-      <h2>Add Feedback Details</h2>
-      <form #feedbackForm="ngForm" (ngSubmit)="addFeedback()">
-        <label for="feedbackId">Feedback ID:</label>
-        <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required><br><br>
 
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" [(ngModel)]="feed.date" required><br><br>
+    <div class ="five">
 
-        <label for="comments">Comments:</label>
-        <input type="text" id="comments" name="comments" [(ngModel)]="feed.comments" required><br><br>
-
-        <label for="rating">Rating:</label>
-        <input type="number" id="rating" name="rating" [(ngModel)]="feed.rating" required><br><br>
-
-        <button type="submit">ADD</button>
-      </form>
-
-      <p>{{ responseMessage }}</p>
-
-    </div>
-
-    <div *ngIf="myparam==2">
-      <h2>Update Feedback</h2>
-      <form #updateFeedbackForm="ngForm" (ngSubmit)="updateFeedback()">
-        <label for="feedbackId">Enter Enrollment Id to update feedback:</label>
-        <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required><br><br>
-
-        <label for="rating">Rating:</label>
-        <input type="number" id="rating" name="rating" [(ngModel)]="feed.rating" required><br><br>
-
-        <button type="submit">UPDATE</button>
-      </form>
-        
-      <p>{{ responseMessage }}</p>
-
-    </div>
-
-    <div *ngIf="myparam==3">
-        <h2>View All Feedbacks</h2>
-  
-        <table>
-          <thead>
-            <tr>
-              <th>Feedback ID</th>
-              <th>Date</th>
-              <th>Comments</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let feedback of feeds">
-              <td>{{ feedback.feedbackId }}</td>
-              <td>{{ feedback.date }}</td>
-              <td>{{ feedback.comments }}</td>
-              <td>{{ feedback.rating }}</td>
-            </tr>
-          </tbody>
-        </table>
-  
-        <p>{{ responseMessage }}</p>
-      </div>
-   
-    <div *ngIf="myparam==4">
-        <h2>Delete Feedback By ID</h2>
-        <form #deleteFeedbackForm="ngForm" (ngSubmit)="deleteFeedbackById()">
-          <label for="feedbackId">Feedback ID:</label>
-          <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required><br><br>
-          <button type="submit">DELETE</button>
-        </form>
-        <p>{{ responseMessage }}</p>
-      </div>
+    <h1 class="feedheader">Feedback Info</h1>
 
   </div>
+
+   
+
+ 
+
+   
+
+    <ul class="theul">
+
+      <li class="thelist"><a class="theanchor" [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 1 }">Add Feedback</a></li>
+
+      <li class="thelist"><a class="theanchor" [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 2 }">Update Feedback</a></li>
+
+      <li class="thelist"><a class="theanchor" [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 3 }">View All Feedback</a></li>
+
+      <li class="thelist"><a class="theanchor" [routerLink]="['/feedbackInfo']" [queryParams]="{ paramFlag: 4 }">Delete Feedback</a></li>
+
+    </ul>
+
+</div>
+
+<div>
+
+  <div>
+
+    <!-- <h4>Feedback Module </h4>
+
+    <h4>Param is {{myparam}}</h4> -->
+
+    <div class="outeradd" *ngIf="myparam==1">
+
+      <h2 class="feedheader">Add Feedback Details</h2>
+
+      <form #feedbackForm="ngForm" (ngSubmit)="addFeedback()">
+
+        <label class="thelabel" for="feedbackId">Feedback ID:</label>
+
+        <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required pattern="[A-Za-z0-9]+"><br><br>
+
+ 
+
+        <div *ngIf="feedbackForm.controls['feedbackId'].invalid && (feedbackForm.controls['feedbackId'].dirty || feedbackForm.controls['feedbackId'].touched)">
+
+          <div *ngIf="feedbackForm.controls['feedbackId'].hasError('required')">Feedback ID is required.</div>
+
+          <div *ngIf="feedbackForm.controls['feedbackId'].hasError('pattern')">Feedback ID should be alphanumeric.</div>
+
+        </div>
+
+ 
+
+        <label class="thelabel" for="date">Date:</label>
+
+        <input type="date" id="date" name="date" [(ngModel)]="feed.feedbackDate" required><br><br>
+
+ 
+
+        <label class="thelabel" for="comments">Comments:</label>
+
+        <input type="text" id="comments" name="comments" [(ngModel)]="feed.comments" required minlength="1" maxlength="200"><br><br>
+
+ 
+
+        <div *ngIf="feedbackForm.controls['comments'].invalid && (feedbackForm.controls['comments'].dirty || feedbackForm.controls['comments'].touched)">
+
+          <div *ngIf="feedbackForm.controls['comments'].hasError('required')">Comments are required.</div>
+
+          <div *ngIf="feedbackForm.controls['comments'].hasError('minlength')">Comments should have at least 1 character.</div>
+
+          <div *ngIf="feedbackForm.controls['comments'].hasError('maxlength')">Comments should have at most 200 characters.</div>
+
+        </div>
+
+ 
+
+        <label class="thelabel" for="rating">Rating:</label>
+
+        <input type="number" id="rating" name="rating" [(ngModel)]="feed.rating" required min="1" max="5"><br><br>
+
+ 
+
+        <div *ngIf="feedbackForm.controls['rating'].invalid && (feedbackForm.controls['rating'].dirty || feedbackForm.controls['rating'].touched)">
+
+          <div *ngIf="feedbackForm.controls['rating'].hasError('required')">Rating is required.</div>
+
+          <div *ngIf="feedbackForm.controls['rating'].hasError('min')">Rating should not be negative.</div>
+
+          <div *ngIf="feedbackForm.controls['rating'].hasError('max')">Rating should be not more then 5.</div>
+
+        </div>
+
+ 
+
+        <label class="thelabel" for="enrollmentId">EnrollmentId:</label>
+
+        <input type="text" id="enrollmentId" name="enrollmentId" [(ngModel)]="feed.enrollmentId" #IdControl="ngModel" required pattern="[A-Za-z0-9]+">
+
+ 
+
+        <div *ngIf="feedbackForm.controls['enrollmentId'].invalid && (feedbackForm.controls['enrollmentId'].dirty || feedbackForm.controls['enrollmentId'].touched)">
+
+          <div *ngIf="feedbackForm.controls['enrollmentId'].hasError('required')">Enrollment ID is required.</div>
+
+          <div *ngIf="feedbackForm.controls['enrollmentId'].hasError('pattern')">Enrollment ID should be alphanumeric.</div>
+
+        </div>
+
+       
+<br><br>
+        <button class="thebutton" type="submit" [disabled]="feedbackForm.invalid">ADD</button>
+
+      </form>
+
+ 
+
+      <!-- <p>{{ responseMessage }}</p> -->
+
+ 
+
+    </div>
+
+ 
+
+    <div class="outeradd" *ngIf="myparam==2">
+
+      <h2 class="feedheader" >Update Feedback</h2>
+
+      <form #updateFeedbackForm="ngForm" (ngSubmit)="updateFeedback()">
+
+        <label class="thelabel second" for="enrollmentId">Enter Enrollment Id to update feedback:</label>
+
+        <input type="text" id="enrollmentId" name="enrollmentId" [(ngModel)]="feed.enrollmentId" #IdControl="ngModel" required>
+
+ 
+
+        <div *ngIf="updateFeedbackForm.controls['enrollmentId'].invalid && (updateFeedbackForm.controls['enrollmentId'].dirty || updateFeedbackForm.controls['enrollmentId'].touched)">
+
+          <div *ngIf="updateFeedbackForm.controls['enrollmentId'].hasError('required')">Enrollment ID is required.</div>
+
+        </div>
+
+ 
+
+ 
+
+        <label for="rating">Rating:</label>
+
+        <input type="number" id="rating" name="rating" [(ngModel)]="feed.rating" required min="1" max="5"><br><br>
+
+ 
+
+        <div *ngIf="updateFeedbackForm.controls['rating'].invalid && (updateFeedbackForm.controls['rating'].dirty || updateFeedbackForm.controls['rating'].touched)">
+
+          <div *ngIf="updateFeedbackForm.controls['rating'].hasError('required')">Rating is required.</div>
+
+          <div *ngIf="updateFeedbackForm.controls['rating'].hasError('min') || updateFeedbackForm.controls['rating'].hasError('max')">Rating should be between 1 and 5.</div>
+
+        </div>
+
+ 
+
+        <button class="thebutton" type="submit" [disabled]="!updateFeedbackForm.valid">UPDATE</button>
+
+      </form>
+
+       
+
+      <!-- <p>{{ responseMessage }}</p> -->
+
+ 
+
+    </div>
+
+ 
+
+    <div class="outeradd" *ngIf="myparam==3">
+
+        <h2 class="feedheader">View All Feedbacks</h2>
+
+ 
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th class="tableheader">Feedback ID</th>
+
+              <th class="tableheader">Date</th>
+
+              <th class="tableheader">Comments</th>
+
+              <th class="tableheader">Rating</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let feedback of feeds">
+
+              <td>{{ feedback.feedbackId }}</td>
+
+              <td>{{ feedback.feedbackDate }}</td>
+
+              <td>{{ feedback.comments }}</td>
+
+              <td>{{ feedback.rating }}</td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+ 
+
+        <p>{{ responseMessage }}</p>
+
+      </div>
+
+   
+
+    <div class="outeradd" *ngIf="myparam==4">
+
+        <h2 class="feedheader">Delete Feedback By ID</h2>
+
+        <form #deleteFeedbackForm="ngForm" (ngSubmit)="deleteFeedbackById()">
+
+          <label class="thelabel1" for="feedbackId">Feedback ID:</label>
+
+          <input type="text" id="feedbackId" name="feedbackId" [(ngModel)]="feed.feedbackId" required><br><br>
+
+ 
+
+          <div *ngIf="deleteFeedbackForm.controls['feedbackId'].invalid && (deleteFeedbackForm.controls['feedbackId'].dirty || deleteFeedbackForm.controls['feedbackId'].touched)">
+
+            <div *ngIf="deleteFeedbackForm.controls['feedbackId'].hasError('required')">Feedback ID is required.</div>
+
+          </div>
+
+ 
+
+ 
+
+          <button class="thebutton" type="submit" [disabled]="!deleteFeedbackForm.valid">DELETE</button>
+
+        </form>
+
+        <!-- <p>{{ responseMessage }}</p> -->
+
+      </div>
+
+ 
+
+  </div>
+
 </div>

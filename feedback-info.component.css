@@ -1,0 +1,72 @@
+.feedheader{
+    font-family: cursive;
+    margin-left: 3rem;
+    font-size: 22px;
+    font-weight: bolder; 
+    color:#202020;
+    text-transform: uppercase;
+    word-spacing: 1px; letter-spacing:2px;
+}
+.theul{
+    list-style: none;
+}
+.outerfeed{
+    display: flex;
+    background-image: url("MicrosoftTeams-image (4).png");
+    bottom: 1.1rem;
+    position: relative;
+    height: -webkit-fill-available;
+    background-size: cover;
+}
+.thelist{
+    list-style: square;
+    font-size: large;
+    padding-bottom: 1rem;
+    font-family: cursive;
+}
+.theanchor{
+    font-weight: 700;
+    text-decoration: none;
+}
+.theanchor:hover{
+    color: red;
+}
+.outeradd{
+    text-align: center;
+    position: relative;
+    background-color: rgb(255 254 254 / 50%);
+    left: 11rem;
+}
+.thelabel{
+    color: #1b00ff;
+    font-size: large;
+    padding-bottom: 0.6rem;
+    font-weight: bolder;
+    display: flex;
+}
+.thelabel1{
+    color: #1b00ff;
+    /* font-size: large; */
+    font-weight: bolder;
+}
+.thebutton{
+    font-family: cursive;
+    font-weight: 900;
+    width: 6rem;
+    font-size: large;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.thebutton:hover{
+    background-color: #1b00ff;
+    color: white;
+    border-color: transparent;
+}
+.tableheader{
+    color: #1b00ff;
+    padding-bottom: 0.6rem;
+    font-weight: bolder;
+}
+.second{
+    font-size: 1rem;
+}

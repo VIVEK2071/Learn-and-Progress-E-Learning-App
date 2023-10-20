@@ -37,13 +37,16 @@ export class FeedbackInfoComponent implements OnInit{
   }
   addFeedback() {
     this.responseMessage="";
-    this.FeedbackService.addFeedback(this.feed, this.feed.enrollmentId)
+    console.log("in ts")
+    this.feedbackService.addFeedback(this.feed, this.feed.enrollmentId)
       .subscribe(
         (response: any) => {
-          this.responseMessage = `Feedback with ID ${response.fId} added successfully`;
+          this.responseMessage = `Feedback with ID ${response.feedbackId} added successfully`;
+          alert(this.responseMessage);
         },
-        () => {
+        (error: any) => {
           this.responseMessage = 'An error occurred while adding the feedback.';
+          alert(this.responseMessage);
         }
       );
   }
@@ -56,10 +59,12 @@ export class FeedbackInfoComponent implements OnInit{
           // Data validation successful
           this.responseMessage="Data successfully updated:",
           this.feedUpdated = data as Feedback;
+          alert(this.responseMessage);
         },
         (error: any) => {
           // Data validation failed
           this.responseMessage="Data is not updated:"
+          alert(this.responseMessage);
         }
       );
         
@@ -71,6 +76,10 @@ export class FeedbackInfoComponent implements OnInit{
     this.feedbackService.viewAll().subscribe(
       
       data=>{this.feeds=data as Feedback[]
+      },
+      (error: any) => {
+        this.responseMessage = 'An error occurred while fetching the data';
+        alert(this.responseMessage);
       }
       );
     
@@ -82,9 +91,11 @@ export class FeedbackInfoComponent implements OnInit{
       .subscribe(
         () => {
           this.responseMessage = `Feedback with ID ${this.feed.feedbackId} deleted successfully`;
+          alert(this.responseMessage);
         },
         () => {
           this.responseMessage = 'An error occurred while deleting the feedback.';
+          alert(this.responseMessage);
         }
       );
   }
