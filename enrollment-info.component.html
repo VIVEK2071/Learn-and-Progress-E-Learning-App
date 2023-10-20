@@ -1,0 +1,284 @@
+<div class="outerouter">
+<div class="outerfeed1">
+  <div class="five">
+  <h1 class="feedheader">Enrollment Info</h1>
+</div>
+<br>
+  <!-- Your navigation links with routerLink and query parameters -->
+  <ul class="theul">
+    <li class="thelist"><a class="theanchor" [routerLink]="['/enrollmentInfo']" [queryParams]="{ paramFlag: 1 }">Add Enrollment</a></li>
+    <li class="thelist"><a class="theanchor" [routerLink]="['/enrollmentInfo']" [queryParams]="{ paramFlag: 2 }">Update Score</a></li>
+    <li class="thelist"><a class="theanchor" [routerLink]="['/enrollmentInfo']" [queryParams]="{ paramFlag: 3 }">View All Enrollments</a></li>
+    <li class="thelist"><a class="theanchor" [routerLink]="['/enrollmentInfo']" [queryParams]="{ paramFlag: 4 }">View Enrollment By ID</a></li>
+    <li class="thelist"><a class="theanchor" [routerLink]="['/enrollmentInfo']" [queryParams]="{ paramFlag: 5 }">View Enrollment By Max score</a></li>
+    <li class="thelist"><a class="theanchor" [routerLink]="['/enrollmentInfo']" [queryParams]="{ paramFlag: 6 }">View Enrollment By Min score</a></li>
+    <li class="thelist"><a class="theanchor" [routerLink]="['/enrollmentInfo']" [queryParams]="{ paramFlag: 7 }">View Enrollment By sorting</a></li>
+  </ul>
+
+  <!-- Your content area to display results or form inputs -->
+  <!-- For example, when you're viewing enrollments, you might display a table of data. -->
+  <!-- When adding an enrollment, you might show a form for data input. -->
+
+</div>
+<div>
+  <div>
+    
+    <div class="outeradd" *ngIf="myparam==1">
+      <h2 class="feedheader">Add Enrollment Details</h2>
+      <form #enrollmentForm="ngForm" (ngSubmit)="addEnrollment()">
+        <label class="thelabel1" for="enrollmentID">Enrollment ID:</label>
+        <input type="text" id="enrollmentId" name="enrollmentId" [(ngModel)]="enroll.enrollmentId" #IdControl="ngModel" required pattern="^[e][0-9]*$">
+        <span *ngIf="IdControl.invalid && IdControl.touched"> ID is required</span><br>
+        <span *ngIf="IdControl.errors?.['pattern']"> Enrollment Id should start form "e" and followed numbers</span>
+          <br>
+
+        <label class="thelabel1" for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" [(ngModel)]="enroll.startDate" #startDateControl="ngModel" required>
+        <span *ngIf="startDateControl.invalid && startDateControl.touched"> StartDate is required</span>
+        <br>
+
+        <label class="thelabel1" for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" [(ngModel)]="enroll.endDate" #endDateControl="ngModel" required>
+        <span *ngIf="endDateControl.invalid && endDateControl.touched"> EndDate is required</span>
+        <br>
+
+        <label class="thelabel1" for="score">Score:</label>
+        <input type="number" id="score" name="score" [(ngModel)]="enroll.score" #scoreControl="ngModel" >
+        <br>
+
+        <label class="thelabel1" for="status">Status:</label>
+        <select id="status" name="status" [(ngModel)]="enroll.status" #statusControl="ngModel" required>
+          <option value="Completed">Completed</option>
+          <option value="In Progress">In Progress</option>
+        </select>
+        <span *ngIf="statusControl.invalid && statusControl.touched"> Status is required</span>
+        <br>
+
+        <label class="thelabel1" for="studentId">Student ID:</label>
+        <input type="text" id="studentId" name="studentId" [(ngModel)]="studentId" #sIdControl="ngModel" required >
+        <span *ngIf="sIdControl.invalid && sIdControl.touched"> Student ID is required</span>
+        <br>
+
+        <label class="thelabel1" for="trainerId">Trainer ID:</label>
+        <input type="text" id="trainerId" name="trainerId" [(ngModel)]="trainerId" #tIdControl="ngModel" required>
+        <span *ngIf="tIdControl.invalid && tIdControl.touched"> Trainer ID is required</span>
+        <br>
+
+        <label class="thelabel1" for="courseId">Course ID:</label>
+        <input type="text" id="courseId" name="courseId" [(ngModel)]="courseId" #cIdControl="ngModel" required >
+        <span *ngIf="cIdControl.invalid && cIdControl.touched"> Course ID is required</span>
+        <br>
+
+        <button class="thebutton" type="submit" [disabled]="enrollmentForm.invalid">ADD</button>
+      </form>
+
+     
+
+    </div>
+
+    <div class="outeradd" *ngIf="myparam==2">
+      <h2 class="feedheader">Update Score</h2>
+      <form #updateScoreForm="ngForm" (ngSubmit)="updateScore()">
+        <label class="thelabel" for="enrollmentId">Enrollment ID:</label>
+        <input type="text" id="enrollmentId" name="enrollmentId" [(ngModel)]="enroll.enrollmentId" #IdControl="ngModel" required>
+        <span *ngIf="IdControl.invalid && IdControl.touched"> ID is required</span>
+        <br>
+
+        <label class="thelabel" for="score">Score:</label>
+        <input type="number" id="score" name="score" [(ngModel)]="enroll.score" #scoreControl="ngModel" required>
+        <span *ngIf="scoreControl.invalid && scoreControl.touched"> Score is required</span>
+        <br>
+ 
+        <button class="thebutton" type="submit" [disabled]="updateScoreForm.invalid">UPDATE</button>
+      </form>
+        
+     
+
+    </div>
+
+    <div class="outeradd" *ngIf="myparam==3">
+      <h2 class="feedheader">View All Enrollments</h2>
+      <form (ngSubmit)="viewAll()">
+        <button type="submit" >ViewAll</button>
+      </form>
+      <table>
+        <thead>
+          <tr >
+            <th class="tableheader">Enrollment ID</th>
+            <th class="tableheader">Start Date</th>
+            <th class="tableheader">End Date</th>
+            <th class="tableheader">Score</th>
+            <th class="tableheader">Status</th>
+            <th class="tableheader">Student ID</th>
+            <th class="tableheader">Trainer ID</th>
+            <th class="tableheader">Course ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let enrollment of enrolls">
+            <td>{{ enrollment.enrollmentId }}</td>
+            <td>{{ enrollment.startDate }}</td>
+            <td>{{ enrollment.endDate }}</td>
+            <td>{{ enrollment.score }}</td>
+            <td>{{ enrollment.status }}</td>
+            <td>{{ enrollment.studentObj.studentId }}</td>
+            <td>{{ enrollment.trainerObj.trainerId }}</td>
+            <td>{{ enrollment.courseObj.courseId }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+     
+    
+    </div>
+
+    <div class="outeradd" *ngIf="myparam==4">
+      <h2 class="feedheader">View Enrollment By ID</h2>
+      <form #enrollmentByIDForm="ngForm" (ngSubmit)="viewEnrollmentByID()">
+        <label class="thelabel1" for="enrollmentID">Enrollment ID:</label>
+        <input type="text" id="enrollmentId" name="enrollmentId" [(ngModel)]="enrollmentId" #IdControl="ngModel" required>
+        <span *ngIf="IdControl.invalid && IdControl.touched"> ID is required</span>
+        <br><br>
+        <button class="thebutton" type="submit" [disabled]="enrollmentByIDForm.invalid">SEARCH</button>
+      </form>
+      
+      <table>
+        <thead>
+          <tr>
+            <th class="tableheader">Enrollment ID</th>
+            <th class="tableheader">Start Date</th>
+            <th class="tableheader">End Date</th>
+            <th class="tableheader">Score</th>
+            <th class="tableheader">Status</th>
+            <th class="tableheader">Student ID</th>
+            <th class="tableheader">Trainer ID</th>
+            <th class="tableheader">Course ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            <td>{{ enroll1?.enrollmentId }}</td>
+            <td>{{ enroll1?.startDate }}</td>
+            <td>{{ enroll1?.endDate }}</td>
+            <td>{{ enroll1?.score }}</td>
+            <td>{{ enroll1?.status }}</td>
+            <td>{{ enroll1?.studentObj?.studentId }}</td>
+            <td>{{ enroll1?.trainerObj?.trainerId }}</td>
+            <td>{{ enroll1?.courseObj?.courseId}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="outeradd" *ngIf="myparam==5">
+      <h2 class="feedheader">View Enrollment By Max score</h2>
+      <form (ngSubmit)="viewMaxScore()">
+        <button class="thebutton" type="submit" >View</button>
+      </form>
+      <table>
+        <thead>
+          <tr >
+            <th class="tableheader">Enrollment ID</th>
+            <th class="tableheader">Start Date</th>
+            <th class="tableheader">End Date</th>
+            <th class="tableheader">Score</th>
+            <th class="tableheader">Status</th>
+            <th class="tableheader">Student ID</th>
+            <th class="tableheader">Trainer ID</th>
+            <th class="tableheader">Course ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let enrollment of enrollMax">
+            <td>{{ enrollment.enrollmentId }}</td>
+            <td>{{ enrollment.startDate }}</td>
+            <td>{{ enrollment.endDate }}</td>
+            <td>{{ enrollment.score }}</td>
+            <td>{{ enrollment.status }}</td>
+            <td>{{ enrollment.studentObj.studentId }}</td>
+            <td>{{ enrollment.trainerObj.trainerId }}</td>
+            <td>{{ enrollment.courseObj.courseId }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      
+
+    </div>
+    <div class="outeradd" *ngIf="myparam==6">
+      <h2 class="feedheader">View Enrollment By Min score</h2>
+      <form (ngSubmit)="viewMinScore()">
+        <button class="thebutton" type="submit" >View</button>
+      </form>
+      <table>
+        <thead>
+          <tr >
+            <th class="tableheader">Enrollment ID</th>
+            <th class="tableheader">Start Date</th>
+            <th class="tableheader">End Date</th>
+            <th class="tableheader">Score</th>
+            <th class="tableheader">Status</th>
+            <th class="tableheader">Student ID</th>
+            <th class="tableheader">Trainer ID</th>
+            <th class="tableheader">Course ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let enrollment of enrollMin">
+            <td>{{ enrollment.enrollmentId }}</td>
+            <td>{{ enrollment.startDate }}</td>
+            <td>{{ enrollment.endDate }}</td>
+            <td>{{ enrollment.score }}</td>
+            <td>{{ enrollment.status }}</td>
+            <td>{{ enrollment.studentObj.studentId }}</td>
+            <td>{{ enrollment.trainerObj.trainerId }}</td>
+            <td>{{ enrollment.courseObj.courseId }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      
+
+    </div>
+    <div class="outeradd" *ngIf="myparam==7">
+      <h2 class="feedheader">View Enrollment By sorting</h2>
+      <form (ngSubmit)="viewScoreBySort()">
+        <button class="thebutton" type="submit" >View</button>
+      </form>
+      <table>
+        <thead>
+          <tr >
+            <th class="tableheader">Enrollment ID</th>
+            <th class="tableheader">Start Date</th>
+            <th class="tableheader">End Date</th>
+            <th class="tableheader">Score</th>
+            <th class="tableheader">Status</th>
+            <th class="tableheader">Student ID</th>
+            <th class="tableheader">Trainer ID</th>
+            <th class="tableheader">Course ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let enrollment of enrollsSorted">
+            <td>{{ enrollment.enrollmentId }}</td>
+            <td>{{ enrollment.startDate }}</td>
+            <td>{{ enrollment.endDate }}</td>
+            <td>{{ enrollment.score }}</td>
+            <td>{{ enrollment.status }}</td>
+            <td>{{ enrollment.studentObj.studentId }}</td>
+            <td>{{ enrollment.trainerObj.trainerId }}</td>
+            <td>{{ enrollment.courseObj.courseId }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+    
+
+    
+
+
+  </div>
+</div>
+</div>
