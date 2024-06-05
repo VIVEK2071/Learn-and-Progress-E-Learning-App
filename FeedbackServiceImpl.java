@@ -10,7 +10,7 @@ import com.capg.learningapp.dao.FeedbackDAO;
 import com.capg.learningapp.exception.InvalidEntityException;
 import com.capg.learningapp.model.Feedback;
 
-@Service
+@Service//this is service feedback
 public class FeedbackServiceImpl implements FeedbackService {
 	@Autowired
 	FeedbackDAO feedbackDao;
